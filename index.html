@@ -127,13 +127,14 @@
                     <div class="columns is-centered">
                         <div class="column has-text-centered">
                             <h2 class="title is-1 publication-title">
-                                <strong>NCRL: Efficient Reinforcement Learning by Guiding World Models with Non-Curated Data</strong>
+                                <strong>NCRL</strong>
                             </h2>
-                            <!-- <h2 class="subtitle" style="font-family: 'Source Sans 3', sans-serif; font-weight: 300;">
+                            <h2 class="subtitle" style="font-family: 'Source Sans 3', sans-serif; font-weight: 400;">
+                                <!-- <h2 style="font-family: 'Poppins', sans-serif; font-weight: 100;"> -->
                                 <strong>
-                                    Efficient Reinforcement Learning by Guiding World Models with Non-Curated Data
+                                    Efficient Reinforcement Learning by <br /> Guiding World Models with Non-Curated Data
                                 </strong>
-                            </h2> -->
+                            </h2>
                             <h2 class="subtitle is-4">
                                 <a href="https://www.iclr.cc" style="color: rgba(118, 50, 202, 0.742);">ICLR 2026</a></h2>
                             <div class="is-size-6 publication-authors">
@@ -257,7 +258,7 @@
 
                 <!-- Make central claim -->
                  <!-- change font size -->
-                <p style="text-align: justify; font-size: 1em;">
+                <p style="text-align: center; font-size: 1em;">
                     Leveraging offline data is a promising way to improve the sample efficiency of online reinforcement learning (RL). This paper expands the pool of usable data for offline-to-online RL by leveraging abundant non-curated data that is reward-free, of mixed quality, and collected across multiple embodiments. Although learning a world model appears promising for utilizing such data, we find that naive fine-tuning fails to accelerate RL training on many tasks. Through careful investigation, we attribute this failure to the distributional shift between offline and online data during fine-tuning. To address this issue and effectively use the offline data, we propose two techniques: i) experience rehearsal and ii) execution guidance. With these modifications, the non-curated offline data substantially improves RL's sample efficiency. Under limited sample budgets, our method achieves nearly twice the aggregate score of learning-from-scratch baselines across 72 visuomotor tasks spanning 6 embodiments. On challenging tasks such as locomotion and robotic manipulation, it outperforms prior methods that utilize offline data by a decent margin.
                 </p>
 
