@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="NCRL">
+    <!-- <meta name="image" content="https://robopen.github.io/cover.png"> -->
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="icon" type="image/x-icon" href="assets/rp1m_logo.png" /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>NCRL: Efficient Reinforcement Learning by Guiding World Models with Non-Curated Data
+    </title>
+
+    <meta property="og:type" content="website" />
+    <!-- <meta property="og:image" content="assets/rp1m_logo.png" /> -->
+    <meta property="og:image:type" content="image/jpg">
+    <meta property="og:url" content="https://zhaoyi11.github.io/ncrl-proj/index.html" />
+    <meta property="og:title" content="NCRL" />
+    <meta property="og:description"
+        content="Efficient Reinforcement Learning by Guiding World Models with Non-Curated Data" />
+
+    <!-- TWITTER
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="RP1M" />
+    <meta name="twitter:description"
+        content="A Large-Scale Motion Dataset for Piano Playing with Bimanual Dexterous Robot Hands" /> -->
+
+    <link rel="stylesheet" href="index.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css'>
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&family=Source+Sans+3:wght@300;400&display=swap"
+        rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!--ANALYTICS TAG-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44241506-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { window.dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-44241506-1');
+    </script>
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-carousel.js"></script>
+    <script src="./static/js/index.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const videoElement = document.getElementById('bg-video');
+
+        // When the video metadata is loaded
+        videoElement.addEventListener('loadedmetadata', function () {
+            videoElement.style.opacity = 1.0;
+        });
+    });
+
+    window.addEventListener("scroll", function () {
+        let imageDiv = document.querySelector('.full-page-image');
+        const videoElement = document.getElementById('bg-video');
+        if (window.scrollY > 40000) {
+            videoElement.style.opacity = 0;
+        }
+    });
+
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+
+
+</script>
+
+<body class="vsc-initialized">
+    <div class="full-page-image">
+
+        <video id="bg-video" autoplay loop muted playsinline>
+            <source src="assets/banner.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <!-- You can add an overlay and content inside the container -->
+        <div class="orange"></div>
+
+        <div class="jay" style="padding: 0 20px">
+            <h1 style="font-family: Poppins; font-size: 250%;">NCRL: Efficient Reinforcement Learning by Guiding World Models with Non-Curated Data</h1>
+        </div>
+    </div>
+
+    <!-- <div class="content is-centered has-text-centered" style="margin-right: 20%; margin-left: 20%; "> -->
+    <div class="content is-centered has-text-centered">
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container is-max-desktop">
+                    <div class="columns is-centered">
+                        <div class="column has-text-centered">
+                            <h2 class="title is-1 publication-title">
+                                <strong>RP1M</strong>
+                            </h2>
+                            <h2 class="subtitle" style="font-family: 'Source Sans 3', sans-serif; font-weight: 300;">
+                                <!-- <h2 style="font-family: 'Poppins', sans-serif; font-weight: 100;"> -->
+                                <strong>
+                                    A Large-Scale Motion Dataset for Piano Playing  <br />
+                                    with Bimanual Dexterous Robot Hands
+                                </strong>
+                            </h2>
+                            <h2 class="subtitle is-4">
+                                <a href="https://www.iclr.cc" style="color: rgba(118, 50, 202, 0.742);">ICLR 2026</a></h2>
+                            <div class="is-size-6 publication-authors">
+                                <h5>
+                                <span class="author-block">
+                                    <a href="https://zhaoyi11.github.io/">Yi Zhao</a><sup>1</sup>,</span>
+                                <span class="author-block">
+                                    <a href="https://aidanscannell.com/">Aidan Scannell</a><sup>1,2</sup>,</span>
+                                <span class="author-block">
+                                    <a href="https://wenshuaizhao.github.io/">Wenshuai Zhao</a><sup>1,3</sup>,</span>
+                                <span class="author-block">
+                                    Yuxin Hou<sup>4</sup>,</span>
+                                <span class="author-block">
+                                    <a href="https://tycui.github.io/">Tianyu Cui</a><sup>1,5</sup>,</span>
+                                <span class="author-block">
+                                    <a href="https://clthegoat.github.io/">Le Chen</a><sup>6</sup>,</span> 
+                                <span class="author-block">
+                                </h5>
+                                <h5>
+                                <span class="author-block">
+                                    <a href="https://ei.is.mpg.de/person/dbuechler">Dieter Büchler</a><sup>6,7,8,9</sup></span>
+                                <span class="author-block">
+                                    <a href="https://users.aalto.fi/~asolin/">Arno Solin</a><sup>1,3</sup>,</span>
+                                <span class="author-block">
+                                    <a href="https://users.aalto.fi/~kannalj1/">Juho Kannala</a><sup>1,10</sup>,</span>
+                                <span class="author-block">
+                                    <a href="https://rl.aalto.fi/">Joni Pajarinen</a><sup>1</sup>,</span>
+                                    <span class="author-block">
+                                </span>           
+                              </div>
+                    
+                              <div class="is-size-5 publication-authors">
+                                <span class="author-block"><sup>1</sup>Aalto University</span>&nbsp;&nbsp;&nbsp;
+                                <span class="author-block"><sup>2</sup>University of Edinburgh</span>&nbsp;&nbsp;&nbsp;
+                                <span class="author-block"><sup>3</sup>ELLIS Institute Finland</span>&nbsp;&nbsp;&nbsp;
+                                <span class="author-block"><sup>4</sup>Deep Render</span>&nbsp;&nbsp;&nbsp;
+                                <span class="author-block"><sup>5</sup>Imperial College London</span>&nbsp;&nbsp;&nbsp;
+                                <span class="author-block"><sup>6</sup>Max Planck Institute for Intelligent Systems</span>&nbsp;&nbsp;&nbsp;
+                                <span class="author-block"><sup>7</sup>CIFAR AI Chair</span>&nbsp;&nbsp;&nbsp;
+                                <span class="author-block"><sup>8</sup>University of Alberta</span>&nbsp;&nbsp;&nbsp;
+                                <span class="author-block"><sup>9</sup>Alberta Machine Intelligence Institute (Amii)</span>&nbsp;&nbsp;&nbsp;
+                                <span class="author-block"><sup>10</sup>University of Oulu</span>
+                              </div>
+
+                            <div class="column has-text-centered">
+                                <!-- <div class="col-md-12 mt-3">
+                                    <a href="https://openreview.net/pdf?id=pqgoIGvcgY" class="btn btn-secondary btn-sm" target="_blank"><i class="fa-solid fa-file-pdf"></i>&nbsp;&nbsp;arXiv</a>
+                                    <a href="https://clthegoat.github.io/" target="_blank" class="btn btn-secondary btn-sm"><i class="fa-brands fa-youtube"></i>&nbsp;&nbsp;Video</a>
+                                    <a href="https://clthegoat.github.io/" target="_blank" class="btn btn-secondary btn-sm"><i class="fa-brands fa-github"></i>&nbsp;&nbsp;Code</a>
+                                    <a href="#dataset" class="btn btn-secondary btn-sm"><i class="fa-solid fa-images"></i>&nbsp;&nbsp;Dataset</a>
+                                    <a href="#citation" class="btn btn-secondary btn-sm"><i class="fa-solid fa-file"></i>&nbsp;&nbsp;BibTeX</a>
+                                </div> -->
+                                <div class="publication-links">
+                                    <span class="link-block">
+                                        <a href="https://openreview.net/forum?id=oBXfPyi47m"
+                                            class="external-link button is-normal is-rounded is-dark" target="_blank">
+                                            <span class="icon">
+                                                <i class="fa fa-file-pdf-o" style="font-size:24px"></i>
+                                            </span>
+                                            <span>Paper</span>
+                                        </a>
+                                    </span>
+                                    <!-- <span class="link-block">
+                                        <a href="https://drive.google.com/file/d/1DF1QSU8u_SP9WBYpi1kk7c8Wtajg1NFx/view?usp=sharing"
+                                            class="external-link button is-normal is-rounded is-dark" target="_blank">
+                                            <span class="icon">
+                                                <i class="fa fa-file-pdf-o" style="font-size:24px"></i>
+                                            </span>
+                                            <span>Poster</span>
+                                        </a>
+                                    </span> -->
+                                    <span class="link-block">
+                                        <a href="https://github.com/zhaoyi11/ncrl"
+                                            class="external-link button is-normal is-rounded is-dark" target="_blank">
+                                            <span class="icon">
+                                                <i class="fa fa-github" style="font-size:24px"></i>
+                                            </span>
+                                            <span>Code</span>
+                                        </a>
+                                    </span>
+                                    <!-- <span class="link-block">
+                                        <a href="https://colab.research.google.com/drive/1sMAjT4wmFUCCb1x7JLnry3AQcRcEOuok?usp=sharing"
+                                            class="external-link button is-normal is-rounded is-dark" target="_blank">
+                                            <span class="icon">
+                                                <img src="https://colab.research.google.com/img/colab_favicon_256px.png" style="width:24px; height:24px">
+                                            </span>
+                                            <span>Colab Demo</span>
+                                        </a>
+                                    </span> -->
+                                    <span class="link-block">
+                                        <a href="https://huggingface.co/datasets/zhaoyi11/ncrl" target="_blank"
+                                            class="external-link button is-normal is-rounded is-dark">
+                                            <span class="icon">
+                                                <i class="fa fa-database" style="font-size:24px"></i>
+                                            </span>
+                                            <span>Dataset</span>
+                                        </a>
+                                    </span>
+                                    <!-- <span class="link-block">
+                                        <a href="https://drive.google.com/file/d/1D7Edq1zTslRFiiOCWMAyrnfTLR-yeAFL/view?usp=sharing" target="_blank"
+                                            class="external-link button is-normal is-rounded is-dark">
+                                            <span class="icon">
+                                                <i class="fa fa-video-camera" style="font-size: 24px;"></i>
+                                            </span>
+                                            <span>Video</span>
+                                        </a>
+                                    </span> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="container is-max-desktop">
+        <div class="content is-centered has-text-centered">
+
+            <div class="column has-text-justified">
+
+                <!-- Make central claim -->
+                 <!-- change font size -->
+                <p style="text-align: center; font-size: 1em;">
+                    Leveraging offline data is a promising way to improve the sample efficiency of online reinforcement learning (RL). This paper expands the pool of usable data for offline-to-online RL by leveraging abundant non-curated data that is reward-free, of mixed quality, and collected across multiple embodiments. Although learning a world model appears promising for utilizing such data, we find that naive fine-tuning fails to accelerate RL training on many tasks. Through careful investigation, we attribute this failure to the distributional shift between offline and online data during fine-tuning. To address this issue and effectively use the offline data, we propose two techniques: i) experience rehearsal and ii) execution guidance. With these modifications, the non-curated offline data substantially improves RL's sample efficiency. Under limited sample budgets, our method achieves nearly twice the aggregate score of learning-from-scratch baselines across 72 visuomotor tasks spanning 6 embodiments. On challenging tasks such as locomotion and robotic manipulation, it outperforms prior methods that utilize offline data by a decent margin.
+                </p>
+
+                <!-- Add videos highlighting results-->
+                <!-- <div class="column has-text-centered">
+                    <div class="publication-video">
+                        <video poster="" autoplay controls muted loop playsinline height="100%">
+                            <source src="assets/RP1M.mp4" type="video/mp4">
+                            caption
+                        </video>
+                    </div>
+                </div> -->
+
+                <!-- Video caption -->
+                <!-- <p>
+                    The expert trajectories in RP1M are collected via training RL agents for each of the 2k songs and roll out each policy 500 times with different random seeds. Our method does <strong>not</strong> require any human demonstrations or fingering annotations.
+                    Given the MIDI file <strong>only</strong>, fingering is <strong>discovered automatically</strong> while playing the piano.
+                </p> -->
+                <div class="column overlay-image has-text-centered">
+                    <img src="assets/overview.png">
+                </div>
+                <!-- <h2 class="title is-4">
+                    How does the agent learn to play the piano given only the MIDI file?
+                </h2> -->
+            </div>
+        </div>
+    </div>
+<!-- 
+    <div class="container is-max-desktop">
+        <div class="content is-centered has-text-centered">
+            <div class="column has-text-justified">
+
+                <h3>How does the agent learn to play the piano given only the MIDI file? </h3>
+
+                <div class="column overlay-image has-text-centered">
+                    <p> Although fingering is highly personalized, generally speaking, it helps pianists to press keys timely and
+                        efficiently. Motivated by this, apart from maximizing the key pressing rewards, we also aim to minimize the moving
+                        distances of fingers. Specifically, at time step \(t\), for the \(i\)-th key \(k^i\) to press, we use the \(j\)-th
+                        finger \(f^j\) to press this key such that the overall moving cost is minimized. We define the minimized cumulative
+                        moving distance as \(d_t^{\text{OT}} \in \mathbb{R}^+\), which is given by: </p>
+                    \[
+                    \begin{split}
+                    d_t^{\text{OT}}  =& \min_{w_t} \sum_{(i,j)\in K_t \times F}w_t(k^i, f^j)\cdot c_t(k^i, f^j), ~~
+                    \text{s.t.}, ~~ i)~ \sum_{j\in F}w_t(k^i, f^j) = 1, ~~ \text{for} ~~ i \in K_t, \\
+                                    & ii)~ \sum_{i\in K_t}w_t(k^i, f^j) \leq 1, ~~ \text{for} ~~ j \in F, ~~~
+                                    iii)~~ w_t(k^i, f^j) \in \{0, 1 \}, ~~ \text{for} ~~ (i, j) \in K_t \times F.
+                    \end{split}
+                    \]
+                    <p> Here, \(K_t\) represents the set of keys to press at time step \(t\) and \(F\) represents the fingers of the robot hands. \(c_t(k^i, f^j)\) represents the cost of moving finger \(f^j\) to piano key \(k^i\) at time step \(t\) calculated by their Euclidean distance. \(w_t(k^i, f^j)\) is a boolean weight. In our case, it enforces that each key in \(K_t\) will be pressed by only one finger in \(F\), and each finger presses at most one key. The constrained optimization problem in the equation is an optimal transport problem. Intuitively, it tries to find the best "transport" strategy such that the overall cost of moving (a subset of) fingers \(F\) to keys \(K_t\) is minimized. </p>
+                </div>
+
+                <div class="column has-text-centered">
+                    <div class="publication-video">
+                        <video poster="" autoplay muted loop playsinline controls height="100%">
+                            <source src="assets/OT_reward_calculation.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container is-max-desktop">
+        <div class="content is-centered has-text-centered">
+            <div class="column has-text-justified">
+
+                <h3>The fingering discovered by the agent itself vs human pianist annotations</h3>
+
+                <div class="column overlay-image has-text-centered">
+                    <p> We compare the fingering discovered by the agent itself and the human annotations. We visualize the sample trajectory of playing <i>French Suite No.5 Sarabande</i> and the corresponding fingering. The agent discovers different fingering compared to humans. For example, for the right hand, humans mainly use the middle and ring fingers, while our agent uses the thumb and first finger. Furthermore, in some cases, human annotations are not suitable for the robot hand due to different morphologies. For example, in the second time step of the figure, the human uses the first finger and ring finger. However, due to the mechanical limitation of the robot hand, it can not press keys that far apart with these two fingers, thus mimicking human fingering will miss one key. Instead, our agent discovered to use the thumb and little finger, which satisfies the hardware limitation and accurately presses the target keys.</p>
+                </div>
+
+                <div class="column overlay-image has-text-centered">
+                    <img src="assets/fig3.png">
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <section class="section">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+            <div class="column">
+                <h2 class="title is-3">Performance</h2>
+                <div class="content has-text-justified">
+                <p>
+                    The performance of our method is on part with the one that requires human annotated fingering, and surpass the one without fingering info by a large margin. 
+                </p>
+                <div class="column overlay-image has-text-centered">
+                    <img src="assets/curve.png">
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+    <div class="container is-max-desktop">
+        <div class="content is-centered has-text-centered">
+            <div class="column has-text-justified">
+    <section class="hero is-light is-small">
+        <div class="hero-body">
+            <div class="columns is-centered has-text-centered is-vcentered">
+                <div class="column is-centered has-text-centered is-vcentered">
+                    <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                        <source src="assets/high_dyn_hand_move.mp4"
+                                type="video/mp4">
+                    </video>
+                    <div class="content is-centered has-text-centered font-size: 1em;">
+                        <strong>Highly dynamic hand motions</strong>
+                    </div>
+                </div>
+                <div class="column is-centered has-text-centered is-vcentered">
+                    <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                        <source src="assets/long_dist_hand_move.mp4"
+                                type="video/mp4">
+                    </video>
+                    <div class="content is-centered has-text-centered font-size: 1em;">
+                        <strong>Long distance hand movements</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+    </div>
+    </div> -->
+
+    <!-- <section class="section">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+            <div class="column">
+                <h2 class="title is-3">Cross Embodiment</h2>
+                <div class="content has-text-justified">
+                <p>
+                    Since our approach does not require human demonstrations or fingering annotations, it can be easily transferred to robot hands with different morphologies, even other robotic platforms.
+                </p>
+                </div>
+        
+            </div>
+            </div>
+        </div>
+    </section>
+    <div class="container is-max-desktop">
+        <div class="content is-centered has-text-centered">
+            <div class="column has-text-justified">
+    <section class="hero is-light is-small">
+        <div class="hero-body">
+            <div class="columns is-centered has-text-centered is-vcentered">
+                <div class="column is-centered has-text-centered is-vcentered">
+                    <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                        <source src="assets/fingertip-5-cropped.mp4"
+                                type="video/mp4">
+                    </video>
+                    <div class="content is-centered has-text-centered font-size: 1em;">
+                        <strong>5-fingers hands</strong>
+                    </div>
+                </div>
+                <div class="column is-centered has-text-centered is-vcentered">
+                    <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                        <source src="assets/fingertip-4-cropped.mp4"
+                                type="video/mp4">
+                    </video>
+                    <div class="content is-centered has-text-centered font-size: 1em;">
+                        <strong>4-fingers hands</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+    </div>
+    </div> -->
+
+
+
+    <!-- <section class="section">
+        <div class="container is-max-desktop"> -->
+            <!-- Exp. -->
+            <!-- <div class="columns is-centered has-text-centered">
+            <div class="column">
+                <h2 class="title is-3">More Results</h2>
+                <div class="content has-text-justified">
+                </div>
+            </div>
+            </div> -->
+            <!--/ Exp. -->
+        <!-- </div>
+    </section> -->
+<!--     
+    <section class="hero is-light is-small">
+        <div class="hero-body">
+            <div class="container">
+            <div id="results-carousel" class="carousel results-carousel">
+                <div class="item item-fullbody">
+                <video poster="" id="fullbody" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_1.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-shiba">
+                <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_2.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-shiba">
+                <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_3.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_4.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_5.mp4"
+                                type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_6.mp4"
+                                type="video/mp4">
+                </video>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section> -->
+
+<!-- 
+    <section class="hero is-light is-small">
+        <div class="hero-body">
+            <div class="container">
+            <div id="results-carousel" class="carousel results-carousel">
+                <div class="item item-fullbody">
+                <video poster="" id="fullbody" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_7.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-shiba">
+                <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_8.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-shiba">
+                <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_9.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_10.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_11.mp4"
+                                type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_12.mp4"
+                                type="video/mp4">
+                </video>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="hero is-light is-small">
+        <div class="hero-body">
+            <div class="container">
+            <div id="results-carousel" class="carousel results-carousel">
+                <div class="item item-fullbody">
+                <video poster="" id="fullbody" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_13.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-shiba">
+                <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_14.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-shiba">
+                <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_15.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_16.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_17.mp4"
+                                type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_18.mp4"
+                                type="video/mp4">
+                </video>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero is-light is-small">
+        <div class="hero-body">
+            <div class="container">
+            <div id="results-carousel" class="carousel results-carousel">
+                <div class="item item-fullbody">
+                <video poster="" id="fullbody" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_19.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-shiba">
+                <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_20.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-shiba">
+                <video poster="" id="shiba" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_21.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_22.mp4"
+                            type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_23.mp4"
+                                type="video/mp4">
+                </video>
+                </div>
+                <div class="item item-toby">
+                <video poster="" id="toby" autoplay playsinline controls muted loop height="100%">
+                    <source src="assets/demo-2/video_24.mp4"
+                                type="video/mp4">
+                </video>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section> -->
+
+
+    <!-- <script>
+        const burgerIcon = document.querySelector('#burger');
+        const navbarMenu = document.querySelector('#nav-links');
+        burgerIcon.addEventListener('click', () => {
+            navbarMenu.classList.toggle('is-active');
+        });
+    </script> -->
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p>
+                            Website template inspired by <a href="https://robopen.github.io/">RoboAgent</a>, <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>, and <a
+                                href="https://robotics-transformer2.github.io/">RT-2</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
